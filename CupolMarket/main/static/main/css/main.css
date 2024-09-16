@@ -1,0 +1,183 @@
+.navbar{
+  border-width: 2px;
+  border-bottom: 4px gray solid;
+}
+
+body {
+    display: flex
+    flex-direction: column;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.navbar-brand {
+  margin-right: 2rem; /* Увеличить отступ справа для названия сайта */
+}
+
+.custom-cart-btn,
+.custom-account-btn {
+  margin-left: 1rem; /* Увеличить отступ слева для кнопок "Корзина" и "Аккаунт" */
+}
+
+.card {
+  width: 100%; /* Сделать карточку товара на 100% шире */
+  margin-bottom: 30px; /* Увеличить отступ между карточками по вертикали */
+  height: 400px; /* Увеличить размер карточек по вертикали */
+}
+
+.card-img-top {
+    width: 320px;
+    height: 180px;
+    object-fit: cover; /* Это свойство будет обрезать изображение, чтобы заполнить указанные размеры */
+}
+
+.card-title,
+.card-price,
+.card-rating {
+  margin-bottom: 5px; /* Уменьшаем вертикальные отступы между элементами в карточке */
+}
+
+.btn-primary {
+  width: calc(87% + 30px); /* Увеличиваем ширину кнопки на 30px для компенсации внутренних отступов */
+  margin-top: 10px; /* Добавляем отступ между кнопкой и дном карточки */
+  background-color: #007bff; /* Возвращаем фон кнопки */
+}
+
+.card-body {
+  padding: 15px; /* Увеличиваем внутренний отступ в карточке */
+  margin-left: -5px; /* Сдвигаем содержимое карточки влево */
+}
+
+.container {
+  padding-left: 0; /* Убираем внутренний отступ слева */
+  padding-right: 0; /* Убираем внутренний отступ справа */
+  margin-left: 15px; /* Добавляем отступ слева для всех карточек */
+}
+
+#reviewsCarousel .carousel-control-prev-icon,
+#reviewsCarousel .carousel-control-next-icon {
+  top: 30%;
+  transform: translateY(-30%);
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  background-image: none;
+}
+
+#reviewsCarousel .carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 44px;
+  color: rgb(52, 58, 64);
+}
+
+#reviewsCarousel .carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 44px;
+  color: rgb(52, 58, 64);
+}
+
+#reviewsCarousel .carousel-control-prev {
+  left: -5%;
+}
+
+#reviewsCarousel .carousel-control-next {
+  right: -5%;
+}
+
+#reviewsCarousel .carousel-item {
+  max-height: 380px; /* Ограничиваем высоту карусели */
+  overflow: hidden; /* Скрываем содержимое, выходящее за пределы */
+}
+
+
+#reviewsCarousel .carousel-item img {
+  width: 100%;
+  height: auto;
+  margin-top: 35px;
+}
+
+#ProductCarousel .carousel-item {
+  max-height: 380px; /* Ограничиваем высоту карусели */
+  overflow: hidden; /* Скрываем содержимое, выходящее за пределы */
+}
+
+#ProductCarousel .carousel-item img {
+  width: 100%;
+  height: auto;
+}
+
+.github-link {
+    margin-bottom: 10px;
+}
+
+footer {
+    height: 250px;
+    margin-top: 50px;
+}
+
+.custom-container {
+  margin-top: 50px;
+}
+.author-name {
+  font-weight: bold;
+  font-size: 24px;
+}
+.about-me {
+  margin-top: 20px;
+}
+.github-link {
+  margin-top: 20px;
+}
+
+.limited-width-paragraph {
+  max-width: 900px; /* Установка максимальной ширины абзаца */
+  word-wrap: break-word; /* Обеспечьте перенос слов */
+}
+
+.product-image {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover;
+}
+.product-container {
+    max-height: 300px; /* Задаем высоту контейнера */
+    overflow-y: auto; /* Добавляем вертикальную прокрутку */
+    background-color: #f8f9fa; /* Чтобы контейнеры выглядели одинаково */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.product-item {
+    border: 1px solid #ccc; /* Рамка для товаров */
+    padding: 10px; /* Внутренний отступ */
+    margin-bottom: 20px; /* Устанавливаем отступ между товарами */
+    display: flex;
+    align-items: center;
+}
+
+.btn-animated:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.payment-container{
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1100;
+    pointer-events: none;
+}
+.toast {
+    width: 300px;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    pointer-events: auto;
+}

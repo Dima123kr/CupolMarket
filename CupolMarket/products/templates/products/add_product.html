@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 align="center">Добавьте описание товара</h1>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Карусель с фотографиями товара -->
+            <div id="ProductCarousel" data-interval="false" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% with photos="static/img/no.jpg" %}
+                    <div class="carousel-item active">
+                        <img src="/{{ photos }}" class="d-block w-100 img-fluid" alt="...">
+                    </div>
+                    {% endwith %}
+                </div>
+                <a class="carousel-control-prev" href="#ProductCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#ProductCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form action="" method="post">
+                {% csrf_token %}
+                <h2>
+                    {{ form.name }}
+                    {% for error in form.name.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </h2>
+                <p>Производитель: {{ request.user.get_user.name }} {{ request.user.get_user.surname }}</p>
+                <p class="limited-width-paragraph">
+                    {{ form.description }}
+                    {% for error in form.description.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.price }}
+                    {% for error in form.price.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+                <p>Рейтинг: 0.0★</p>
+                <p>
+                    {{ form.quantity }}
+                    {% for error in form.quantity.errors %}
+                        <p class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </p>
+                    {% endfor %}
+                </p>
+                <button type="submit" class="btn btn btn-animated btn-outline-dark">Продолжить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

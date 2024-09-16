@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="container mt-4"> <!-- Основной контейнер -->
+  <div id="product-container" class="row"> <!-- Контейнер для карточек товаров -->
+    <!-- Карточки товаров будут добавляться сюда -->
+  </div>
+</div>
+
+<script src="{% static 'scripts/loadProducts.js' %}"></script>
+
+{% endblock %}

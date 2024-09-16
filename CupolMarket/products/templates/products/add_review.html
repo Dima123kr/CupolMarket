@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if is_not_buyer %}
+    <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 250px;
+        }
+    </style>
+    <div class="container">
+        <h2 class="mt-4 mb-4">Вы не покупатель</h2>
+    </div>
+{% elif product_not_exists %}
+    <div class="container">
+        <h2 class="mt-4 mb-4">Такого продукта не существует</h2>
+    </div>
+{% elif request.user.is_authenticated %}
+    <body>
+        <div class="container mt-5">
+            <h1 class="mb-4">Оставьте отзыв</h1>
+            <form action="/product/{{ product_id }}/submit_review" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="rating">Рейтинг:</label>
+                    <select class="form-control" id="rating" name="rating">
+                        <option value="1">1 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="5">5 ★</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="review">Ваш отзыв:</label>
+                    <textarea class="form-control" id="review" name="review" maxlength='450' rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="photos">Приложить фото:</label>
+                    <input type="file" onchange="checkFiles(this)" class="form-control-file" id="photos" name="photos" accept=".png,.jpg,.bmp,.jpeg" multiple >
+                </div>
+                <button type="submit" class="btn btn-outline-dark btn-animated">Отправить</button>
+            </form>
+        </div>
+    </body>
+{% else %}
+  <div class="container">
+      <h2 class="mt-4 mb-4">Вы не авторизованы</h2>
+  </div>
+{% endif %}
+
+{% endblock %}
