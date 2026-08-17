@@ -181,9 +181,9 @@ def submit_review(request, product_id):
     review = new_review(product_id, request.user.id, int(rating), review_text)
     try:
         os.mkdir(str(BASE_DIR) + f"/main/static/photos/reviews/{review.id}")
+        Image.open(photo).save(os.path.join(str(BASE_DIR) + f"/main/static/photos/reviews/{review.id}", f"{photo}.png"))
     except Exception as err:
         pass
-    Image.open(photo).save(os.path.join(str(BASE_DIR) + f"/main/static/photos/reviews/{review.id}", f"{photo}.png"))
     average_reviews = count_average(Review.objects.filter(product_id=product_id))
     db_product = Product.objects.get(id=product_id)
     db_product.rating = average_reviews
