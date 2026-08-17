@@ -37,12 +37,14 @@ def login_user(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
+        if len(BaseUser.objects.filter(email=email)) == 0:
+            return render(request, "users/login.html", {"message": "Неверный почтовый адрес", "form": form})
         user = BaseUser.objects.get(email=email)
-        if user:
-            if user.get_user().check_password(password):
-                login(request, user)
-                return redirect("/")
-        return render(request, "users/login.html", {"message": "Неправильный логин или пароль", "form": form})
+        if user.get_user().check_password(password):
+            login(request, user)
+            return redirect("/")
+        else:
+            return render(request, "users/login.html", {"message": "Неверный пароль", "form": form})
     return render(request, "users/login.html", {"form": form})
 
 
