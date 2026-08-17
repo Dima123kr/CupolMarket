@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if request.user.type == "admin" %}
-        <h1 align="center">Продавцы</h1>
+    <div style="text-align: center">
+        <br><br>
+        <h1>Список продавцов</h1>
+        <br><br>
+        <center>
         <table border="2px solid grey">
             <tr>
                 <th bgcolor="#b3b3b3">ID</th>
@@ -41,7 +44,7 @@
                 </tr>
             {% endfor %}
         </table>
-    {% else %}
-        <h1 align="center">У вас нет прав для доступа к данной странице</h1>
-    {% endif %}
+        </center>
+        <br><br><br>
+    </div>
 {% endblock %}

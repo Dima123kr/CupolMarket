@@ -111,87 +111,115 @@ def edit_user(request):
     return render(request, "users/edit.html", {"form": form})
 
 
+@login_required(login_url="/account/login")
 def admin(request):
-    return render(request, "users/admin.html")
+    if request.user.type == "admin":
+        return render(request, "users/admin.html")
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def list_of_buyers(request):
-    buyers = Buyer.objects.all()
-    return render(request, "users/list_of_buyers.html", {"buyers": buyers})
+    if request.user.type == "admin":
+        buyers = Buyer.objects.all()
+        return render(request, "users/list_of_buyers.html", {"buyers": buyers})
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def list_of_sellers(request):
-    sellers = Seller.objects.all()
-    return render(request, "users/list_of_sellers.html", {"sellers": sellers})
+    if request.user.type == "admin":
+        sellers = Seller.objects.all()
+        return render(request, "users/list_of_sellers.html", {"sellers": sellers})
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def list_of_admins(request):
-    admins = Admin.objects.all()
-    return render(request, "users/list_of_admins.html", {"admins": admins})
+    if request.user.type == "admin":
+        admins = Admin.objects.all()
+        return render(request, "users/list_of_admins.html", {"admins": admins})
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def delete_account_for_admin(request, id):
-    user = BaseUser.objects.get(id=id)
-    type = user.type
-    if user.type == "seller":
-        all_products = Product.objects.filter(seller_id=id)
-        for i in all_products:
-            delete_product(i.id)
-    user_ = user.get_user()
-    user_.delete()
-    user.delete()
-    return redirect(f"/account/admin/list_of_{type}s")
+    if request.user.type == "admin":
+        user = BaseUser.objects.get(id=id)
+        type = user.type
+        if user.type == "seller":
+            all_products = Product.objects.filter(seller_id=id)
+            for i in all_products:
+                delete_product(i.id)
+        user_ = user.get_user()
+        user_.delete()
+        user.delete()
+        return redirect(f"/account/admin/list_of_{type}s")
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def give_admin(request, id):
-    user = BaseUser.objects.get(id=id)
-    user_ = user.get_user()
-    id = user_.id
-    name = user_.name
-    surname = user_.surname
-    email = user_.email
-    password = user_.password
-    gender = user_.gender
-    age = user_.age
-    date = user_.date
-    user_.delete()
-    admin = Admin()
-    admin.id = id
-    admin.name = name
-    admin.surname = surname
-    admin.email = email
-    admin.set_password(password)
-    admin.gender = gender
-    admin.age = age
-    admin.date = date
-    admin.save()
-    user.type = "admin"
-    admin.save()
-    return redirect("/account/admin/list_of_admins")
+    if request.user.type == "admin":
+        user = BaseUser.objects.get(id=id)
+        user_ = user.get_user()
+        id = user_.id
+        name = user_.name
+        surname = user_.surname
+        email = user_.email
+        password = user_.password
+        gender = user_.gender
+        age = user_.age
+        date = user_.date
+        user_.delete()
+        admin = Admin()
+        admin.id = id
+        admin.name = name
+        admin.surname = surname
+        admin.email = email
+        admin.set_password(password)
+        admin.gender = gender
+        admin.age = age
+        admin.date = date
+        admin.save()
+        user.type = "admin"
+        admin.save()
+        return redirect("/account/admin/list_of_admins")
+    else:
+        return redirect("/")
 
 
+@login_required(login_url="/account/login")
 def give_buyer(request, id):
-    user = BaseUser.objects.get(id=id)
-    user_ = user.get_user()
-    id = user_.id
-    name = user_.name
-    surname = user_.surname
-    email = user_.email
-    password = user_.password
-    gender = user_.gender
-    age = user_.age
-    date = user_.date
-    user_.delete()
-    buyer = Buyer()
-    buyer.id = id
-    buyer.name = name
-    buyer.surname = surname
-    buyer.email = email
-    buyer.set_password(password)
-    buyer.gender = gender
-    buyer.age = age
-    buyer.date = date
-    buyer.save()
-    user.type = "buyer"
-    user.save()
-    return redirect("/account/admin/list_of_admins")
+    if request.user.type == "admin":
+        user = BaseUser.objects.get(id=id)
+        user_ = user.get_user()
+        id = user_.id
+        name = user_.name
+        surname = user_.surname
+        email = user_.email
+        password = user_.password
+        gender = user_.gender
+        age = user_.age
+        date = user_.date
+        user_.delete()
+        buyer = Buyer()
+        buyer.id = id
+        buyer.name = name
+        buyer.surname = surname
+        buyer.email = email
+        buyer.set_password(password)
+        buyer.gender = gender
+        buyer.age = age
+        buyer.date = date
+        buyer.save()
+        user.type = "buyer"
+        user.save()
+        return redirect("/account/admin/list_of_admins")
+    else:
+        return redirect("/")
