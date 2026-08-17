@@ -158,25 +158,19 @@ def add_review(request, product_id):
     products_ids = [int(i.id) for i in products]
     buyers = Buyer.objects.all()
     buyers_ids = [int(i.id) for i in buyers]
-    return render(request, "products/add_review.html", {
-        "is_not_buyer": request.user.id not in buyers_ids,
-        "products_not_exists": product_id not in products_ids,
-        "product_id": product_id
-    })
+    if request.user.id in buyers_ids and product_id in products_ids:
+        return render(request, "products/add_review.html", {"product_id": product_id})
+    else:
+        return redirect("/")
 
 
-@login_required
+@login_required(login_url="/account/login")
 def submit_review(request, product_id):
     buyers = Buyer.objects.all()
     buyers_ids = [i.id for i in buyers]
     rating = request.POST.get("rating")
     review_text = request.POST.get("review")
     photo = request.FILES.get("photos")
-    if request.user.id not in buyers_ids:
-        return render(request, "products/add_review.html", {
-            "is_not_buyer": request.user.id not in buyers_ids,
-            "product_id": product_id
-        })
 
     review = new_review(product_id, request.user.id, int(rating), review_text)
     try:
@@ -187,4 +181,5 @@ def submit_review(request, product_id):
     average_reviews = count_average(Review.objects.filter(product_id=product_id))
     db_product = Product.objects.get(id=product_id)
     db_product.rating = average_reviews
+    db_product.save()
     return redirect("/")
