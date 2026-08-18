@@ -6,13 +6,13 @@ console.log('Product ID:', product_id)
 document.getElementById('addButton').addEventListener('click', function() {fetch('/basket/add/' + product_id)
     .then(response => response.json())
     .then(data => {
-        if (data.success == "1") {
+        if (data.success === "1") {
             showToast('Успех', 'Товар добавлен в корзину');
-        } else if (data.success == "0") {
+        } else if (data.success === "0") {
             showToast('Ошибка', 'Вы не покупатель');
-        } else if (data.success == "2") {
+        } else if (data.success === "2") {
             showToast('Ошибка', 'Товара нет в наличии')
-        } else if (data.success == "3") {
+        } else if (data.success === "3") {
             showToast('Ошибка', 'В корзине максимальное количество товара')
         } else {
             showToast('Ошибка', 'Произошла неизвестная ошибка')

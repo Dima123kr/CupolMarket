@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
 from basket.models import Basket
@@ -7,6 +8,7 @@ from users.models import Seller, Buyer
 from main.functions import new_basket
 
 
+@login_required(login_url="/account/login")
 def get(request):
     basket_data = {
         "items": [],
@@ -26,17 +28,19 @@ def get(request):
     return JsonResponse(basket_data, safe=False)
 
 
+@login_required(login_url="/account/login")
 def payment(request):
-    print(1)
     products = Basket.objects.filter(buyer_id=request.user.id)
     for i in products:
         product = Product.objects.get(id=i.product_id)
         product.quantity -= i.quantity
+        product.save()
     for i in products:
         i.delete()
     return JsonResponse({}, safe=False)
 
 
+@login_required(login_url="/account/login")
 def add(request, product_id):
     try:
         data = Basket.objects.all()
@@ -49,7 +53,8 @@ def add(request, product_id):
             db_basket_product = Basket.objects.get(product_id=product_id, buyer_id=request.user.id)
             if db_basket_product.quantity == product_to_by.quantity:
                 return JsonResponse({"success": "3"}, safe=False)
-            db_basket_product.quantity = min(db_basket_product.quantity + 1, product_to_by.quantity)
+            db_basket_product.quantity += 1
+            db_basket_product.save()
         else:
             if product_to_by.quantity == 0:
                 return JsonResponse({"success": "2"}, safe=False)
@@ -60,6 +65,7 @@ def add(request, product_id):
         return JsonResponse({"success": False}, safe=False)
 
 
+@login_required(login_url="/account/login")
 def basket(request):
     buyers_ids = Buyer.objects.all()
     buyers_ids = [buyer.id for buyer in buyers_ids]
